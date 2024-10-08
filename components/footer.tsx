@@ -1,56 +1,104 @@
-// Footer.js
-
 import React from "react";
 import "./FotterStyle.css";
+import Image from "next/image";
 
 interface FooterProps {
-    className?: string;
+  className?: string;
 }
 
 export const Footer: React.FC<FooterProps> = ({ className }) => {
-    return (
-        <div className={`property-default ${className}`}>
-            <div className="frame">
-                <p className="text-wrapper">© 2023 All rights reserved</p>
-                <div className="terms-of-service-pri">
-                    Terms of Service&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Privacy Policy
-                </div>
-            </div>
-            <div className="div">
-                <div className="links">
-                    <div className="text-wrapper-2">Discover</div>
-                    <div className="text-wrapper-3">About us</div>
-                    <div className="text-wrapper-4">Explore</div>
-                    <div className="text-wrapper-5">Books</div>
-                </div>
-                <div className="social">
-                    <img className="facebook-black" alt="Facebook" src="" /> {/* Placeholder for Facebook icon */}
-                    <img className="vimeo-black" alt="Vimeo" src="" /> {/* Placeholder for Vimeo icon */}
-                    <img className="twitter-black" alt="Twitter" src="" /> {/* Placeholder for Twitter icon */}
-                    <div className="youtube-black" /> {/* Placeholder for YouTube icon */}
-                </div>
-            </div>
-            <div className="overlap">
-                <img className="shape" alt="Shape" src="" /> {/* Placeholder for shape image */}
-                <div className="group">
-                    <div className="frame-2">
-                        <div className="subscribe-newsletter">Subscribe Newsletters</div>
-                        <p className="stay-in-the-loop">
-                            Subscribe to our newsletter and unlock a world of exclusive benefits. Be the first to know about our
-                            latest products, special promotions, and exciting updates.
-                        </p>
-                    </div>
-                    <div className="text-field">
-                        <div className="overlap-group">
-                            <div className="rectangle" />
-                            <div className="enter-your-email">Enter Your Email</div>
-                            <div className="subcribe-now-wrapper">
-                                <div className="subcribe-now">SUBSCRIBE NOW</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="flex flex-col bg-white">
+      {/*  */}
+      <Image src="/svg/Shape.svg" alt="shape" width={2000} height={400} />
+
+      {/*  */}
+      <div className="w-full max-w-[1090px] h-auto relative mx-auto top-[-150px] p-4">
+        <div className="w-full h-full bg-[#ffd700] rounded-[10px] relative flex flex-col lg:flex-row justify-between items-center p-6">
+          {/* Left Section: Heading and Description */}
+          <div className="flex flex-col gap-3 lg:max-w-[60%] text-left lg:text-left">
+            <h2 className="text-black text-[28px] font-normal font-playfair">
+              Subscribe to Newsletters
+            </h2>
+            <p className="text-black text-sm font-light font-poppins opacity-60 lg:max-w-[400px]">
+              Subscribe to our newsletter and unlock a world of exclusive
+              benefits. Be the first to know about our latest products, special
+              promotions, and exciting updates.
+            </p>
+          </div>
+
+          {/* Right Section: Email Input and Button */}
+          <div className="flex justify-between items-center w-full lg:w-[40%] mt-4 lg:mt-0">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-[70%] h-[56px] p-3 rounded bg-white opacity-25 text-[#1b1d21] font-poppins"
+            />
+            <button className="w-[30%] h-[56px] bg-[#23204c] text-white font-poppins uppercase rounded">
+              Subscribe Now
+            </button>
+          </div>
         </div>
-    );
+      </div>
+
+      <div className="w-[1314px] h-6 my-10 ml-16 justify-around items-center gap-[570px] flex">
+        
+        <div className="w-[520px] h-[18px] relative flex-row justify-between items-start flex">
+          <div className="w-[76.67px] text-[#09132e] text-base font-normal font-['Poppins']">
+            Discover
+          </div>
+          <div className="w-[78.89px] text-[#09132e] text-base font-normal font-['Poppins']">
+            About us
+          </div>
+          <div className="w-[63.33px] text-[#09132e] text-base font-normal font-['Poppins']">
+            Explore
+          </div>
+          <div className="w-[52.22px] text-[#09132e] text-base font-normal font-['Poppins']">
+            Books
+          </div>
+        </div>
+
+
+        <div className="w-60 h-6 relative flex flex-row gap-4">
+          <Image
+            className="w-[26.67px] h-[17px]"
+            src="/svg/facebookBurble.svg"
+            alt="social"
+            width={500}
+            height={24}
+          />
+          <Image
+            className="w-[26.67px] h-[17px]"
+            src="/svg/twitterBurble.svg"
+            alt="social"
+            width={500}
+            height={24}
+          />
+          <Image
+            className="w-[26.67px] h-[17px]"
+            src="/svg/vimeoBurble.svg"
+            alt="social"
+            width={500}
+            height={24}
+          />
+          <Image
+            className="w-[26.67px] h-[17px]"
+            src="/svg/youtubeBurble.svg"    
+            alt="social"
+            width={500}
+            height={24}
+          />
+        </div>
+      </div>
+
+      <div className="h-[61px] ml-16 py-5 border-t border-black/25 justify-start items-start gap-[880px] inline-flex">
+        <div className="text-[#09132e] text-sm font-normal font-['Poppins']">
+          © 2023 All rights reserved
+        </div>
+        <div className="w-[256.67px] text-right text-[#09132e] text-sm font-normal font-['Poppins']">
+          Terms of Service Privacy Policy
+        </div>
+      </div>    
+    </div>
+  );
 };
