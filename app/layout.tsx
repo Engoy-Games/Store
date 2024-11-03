@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="relative">
         <ModalProvider />
         <ToastProvider />
-        <Image src={cricle} alt="circle" className="absolute top-0 left-0" />
+        <Image src={cricle} alt="circle" className="absolute -top-20 right-6 rotate-90 z-0" />
         <Navbar />
         <main className="flex-1">
           {children}
