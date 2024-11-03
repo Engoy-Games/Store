@@ -17,15 +17,15 @@ const CartPage = () => {
   if (!isMounted) return null
 
   return (
-    <div className="bg-white">
-      <Container>
+    <div className="bg-gradient-to-bl from-[#7f36b9] via-[#6a3fbf] to-[#625bff] py-[100px] px-12">
+      <Container >
         <div className="px-4 py-16 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-black">Shopping Cart</h1>
+          <h1 className="text-3xl font-bold text-white">Shopping Cart</h1>
 
           <div className="mt-12 lg:grid lg:grid-cols-12 lg:items-start gap-x-12">
             <div className="lg:col-span-7">
               {cart.items.length === 0 && (
-                <p className="text-neutral-500">Your cart is empty.</p>
+                <p className="text-white">Your cart is empty.</p>
               )}
 
               <ul>

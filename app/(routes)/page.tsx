@@ -1,5 +1,5 @@
 // Server Component (HomePage)
-import { getBillboards } from '@/actions/get-billboard';
+import { getBillboards } from '@/actions/get-billboards';
 import { getProducts } from '@/actions/get-products';
 import { Billboard as BillboardType } from '@/types';
 import { Container } from '@/components/ui/container';
