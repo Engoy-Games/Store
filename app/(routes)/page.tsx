@@ -1,12 +1,14 @@
 // Server Component (HomePage)
-import { getBillboards } from '@/actions/get-billboards';
-import { getProducts } from '@/actions/get-products';
-import { Billboard as BillboardType } from '@/types';
-import { Container } from '@/components/ui/container';
-import RotatedBanner from '@/components/RotatedBanner';
-import AfterBillboard from '@/components/AfterBillboard';
-import { ProductList } from '@/components/product-list';
-import { BillboardSlider } from '@/components/BillboardSlider';
+import { getBillboards } from "@/actions/get-billboards";
+import { getProducts } from "@/actions/get-products";
+import { Billboard as BillboardType } from "@/types";
+import { Container } from "@/components/ui/container";
+import RotatedBanner from "@/components/RotatedBanner";
+import AfterBillboard from "@/components/AfterBillboard";
+import { BillboardSlider } from "@/components/BillboardSlider";
+import ServiceBoxes from "@/components/ServiceBoxes";
+import Testimonials from "@/components/Testimonials";
+import { ProductListNew } from "@/components/ProductListNew";
 
 export const revalidate = 0;
 
@@ -25,13 +27,22 @@ const HomePage = async () => {
 
         <AfterBillboard />
 
-        <div className="flex flex-col gap-y-8 sm:px-6 lg:px-8 px-[100px]">
-          {/* Use fetched products */}
-          <ProductList title="احدث المنتجات المضافة" items={products} />
-        </div>
+        <ProductListNew
+          title="احدث المنتجات المضافة" // Title of the section
+          items={products} // Complete product data
+          productCount={6} // Adjust this number as needed
+        />
+
+        <ServiceBoxes />
+        <Testimonials />
       </div>
     </Container>
   );
 };
 
 export default HomePage;
+
+// <div className="flex flex-col gap-y-8 sm:px-6 lg:px-8 px-[100px]">
+//   {/* Use fetched products */}
+//   <ProductList title="احدث المنتجات المضافة" items={products} />
+// </div>

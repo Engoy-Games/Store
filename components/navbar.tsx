@@ -73,7 +73,7 @@ export const Navbar = () => {
           </div>
 
           {/* Logo on the right */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center z-15 cursor-pointer relative">
             <Image
               className="w-[70px] h-[67px] mr-4"
               src="/svg/logo.svg"
@@ -82,6 +82,7 @@ export const Navbar = () => {
               height={67}
             />
           </Link>
+
         </div>
       </Container>
     </div>
