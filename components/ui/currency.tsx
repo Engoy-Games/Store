@@ -13,7 +13,7 @@ interface CurrencyProps {
 
 export const Currency: React.FC<CurrencyProps> = ({
   value,
-  currencySymbol,
+  currencySymbol = "د.أ", // Default to "د.ا" if no currencySymbol is provided
   fontSize = 'text-bold', // Default font size
   color = 'black', // Default text color
   className = '' // Default empty class
@@ -33,9 +33,12 @@ export const Currency: React.FC<CurrencyProps> = ({
   // Format the value using the formatter utility
   const formattedValue = formatter.format(numericValue)
 
+  // If the formatted value already contains a symbol (like $), remove it, and add the custom symbol
+  const cleanedValue = formattedValue.replace(/[^0-9.,]/g, '') // Remove non-numeric characters
+
   return (
     <div className={`${fontSize} ${color} font-semibold ${className}`}>
-      {currencySymbol ? `${currencySymbol} ${formattedValue}` : formattedValue}
+      {currencySymbol} {cleanedValue}  {/* Now the value appears first, followed by the symbol */}
     </div>
   )
 }

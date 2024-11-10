@@ -26,6 +26,7 @@ export interface Product {
   id: string;
   name: string;
   category: Category;
+  categoryId: string;
   price: number; // Changed to `number` to align with the backend
   productDescription: string;
   isFeatured: boolean;
@@ -91,11 +92,11 @@ export enum CategoryType {
 
 // Mapping for display names
 export const CategoryDisplayNames: Record<CategoryType, string> = {
-  [CategoryType.SHIPPING_LIVE_PROGRAMS]: "Shipping Live Programs",
-  [CategoryType.SHIPPING_GAMES]: "Shipping Games",
-  [CategoryType.SHIPPING_GIFT_CARDS]: "Shipping Gift Cards",
-  [CategoryType.SHIPPING_GAMES_CARDS]: "Shipping Games Cards",
-  [CategoryType.SHIPPING_DIGITAL_SUBSCRIPTIONS]: "Shipping Digital Subscriptions",
+  [CategoryType.SHIPPING_LIVE_PROGRAMS]: "شحن برامج لايف",
+  [CategoryType.SHIPPING_GAMES]: "شحن الألعاب",
+  [CategoryType.SHIPPING_GIFT_CARDS]: "شحن بطاقات الهداياالرقمية",
+  [CategoryType.SHIPPING_GAMES_CARDS]: "شحن بطاقات الألعاب",
+  [CategoryType.SHIPPING_DIGITAL_SUBSCRIPTIONS]: "شحن الاشتراكات الرقمية",
 };
 
 
