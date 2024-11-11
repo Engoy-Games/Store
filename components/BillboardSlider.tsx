@@ -16,6 +16,16 @@ export const BillboardSlider: React.FC<BillboardSliderProps> = ({ data }) => {
     setHasMounted(true); // Ensures that client-side rendering happens correctly
   }, []);
 
+  useEffect(() => {
+    // Set interval to change the currentIndex every 5 seconds
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+    }, 1500); // 5000ms = 5 seconds
+
+    // Clear the interval when the component is unmounted or when data changes
+    return () => clearInterval(interval);
+  }, [data]);
+
   if (!hasMounted) return null; // Avoid hydration issues by not rendering on the server
 
   // Filter to include only active billboards
