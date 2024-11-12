@@ -1,6 +1,5 @@
 import { getCategory } from "@/actions/get-category";
 import { getProducts } from "@/actions/get-products";
-import { Container } from "@/components/ui/container";
 import { NoResults } from "@/components/ui/no-results";
 import { ProductCard } from "@/components/ui/product-card";
 
