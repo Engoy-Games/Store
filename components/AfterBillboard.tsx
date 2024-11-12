@@ -11,8 +11,8 @@ interface ShopButtonProps {
 
 interface ProductInfoProps {
   label: string;
-  title: string;
-  description: string;
+  title: React.ReactNode;
+  description: React.ReactNode;
   isFlipped?: boolean;
 }
 
@@ -22,6 +22,8 @@ interface ProductCardProps {
   title: string;
   description: string;
   isFlipped?: boolean;
+  bgColor: string;
+  textColor: string;
 }
 
 // Button component for "Shop Now"
@@ -44,17 +46,16 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
   isFlipped,
 }) => (
   <div
-    className={`flex-col items-start gap-5 ${
-      isFlipped ? "rotate-180 origin-top-left" : ""
-    }`}
+    className={`flex-col items-start gap-5 ${isFlipped ? "rotate-180 origin-top-left" : ""
+      }`}
   >
     <div className="px-3 py-1.5 bg-gradient-to-bl from-[#7f36b9] to-[#625bff] rounded-sm">
       <div className="text-white text-sm font-semibold">{label}</div>
     </div>
-    <div className="text-[32px] text-[#191c1e] font-semibold font-['Public Sans'] leading-10">
+    <div className="text-[32px] font-semibold font-['Public Sans'] leading-10">
       {title}
     </div>
-    <div className="text-base text-[#475156] font-normal">{description}</div>
+    <div className="text-base font-normal">{description}</div>
   </div>
 );
 
@@ -65,14 +66,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
   title,
   description,
   isFlipped,
+  bgColor,
+  textColor,
 }) => (
-  <div className="w-[630px] h-[336px] p-11 bg-[#f2f3f4] rounded justify-center items-center gap-10 flex">
-    <Image src={imgSrc} alt={title} className="w-[312px] h-[349px]" />
+  <div className={`flex w-full h-[336px] p-11 rounded justify-center items-center gap-10 ${bgColor}`}>
+    <Image src={imgSrc} alt={title} className="w-[312px] h-auto max-h-[349px]" />
     <div className="flex-col justify-start items-start gap-5 inline-flex">
       <ProductInfo
         label={label}
-        title={title}
-        description={description}
+        title={<span className={textColor}>{title}</span>}
+        description={<span className={textColor}>{description}</span>}
         isFlipped={isFlipped}
       />
       <ShopButton text="Shop now" />
@@ -82,24 +85,28 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
 // Main component that displays both products
 const AfterBillboard: React.FC = () => {
-  return (
-    <div className="h-[336px] px-24 justify-start items-start gap-6 inline-flex">
-      <div>
+  return (  
+    <div className="pt-[250px] w-full h-[336px] px-[80px] justify-start items-start gap-6 inline-flex">
+      <div className="flex flex-col justify-center items-center">
         {/* First Product Card */}
         <ProductCard
           imgSrc={engoyGameAvatar}
           label="INTRODUCING"
           title="New Apple Homepod Mini"
           description="Jam-packed with innovation, HomePod mini delivers unexpectedly."
+          bgColor="bg-white"
+          textColor="text-black"
         />
       </div>
-      <div className="bg-[#061743]">
-        {/* secound Product Card */}
+      <div className="flex flex-col justify-center items-center">
+        {/* Second Product Card */}
         <ProductCard
           imgSrc={vipblot}
           label="INTRODUCING NEW"
           title="Xiaomi Mi 11 Ultra 12GB+256GB"
           description="*Data provided by internal laboratories. Industry measurement."
+          bgColor="bg-[#061743]"
+          textColor="text-white"
         />
       </div>
     </div>
