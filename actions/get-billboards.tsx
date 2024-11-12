@@ -8,3 +8,4 @@ export const getBillboards = async () => {
   const data = await response.json();
   return data; 
 };
+
