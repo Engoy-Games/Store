@@ -1,0 +1,109 @@
+{
+    "home": {
+        "title": "الصفحة الرئيسية",
+        "newProducts": "احدث المنتجات المضافة",
+        "lightingProducts": "منتجات الإضاءة الحديثة",
+        "comfortableDesign": "تصميم مريح للجلوس لفترات طويلة لتجربة لعب سهلة وممتعة",
+        "testimonials": "التوصيات",
+        "specialProducts": "الأكثر مبيعاً"
+    },
+    "category": {
+        "lighting": "منتجات الإضاءة الحديثة"
+    },
+    "services": {
+        "serviceBoxes": "خدماتنا"
+    },
+    "navbar": {
+        "home": "الصفحة الرئيسية",
+        "shop": "المتجر",
+        "category": "الأصناف",
+        "contact": "اتصل بنا",
+        "languageSwitch": "عربي"
+    },
+    "cart": {
+        "title": "عربة التسوق",
+        "emptyMessage": "سلة التسوق فارغة.",
+        "continueShopping": "مواصلة التسوق"
+    },
+    "categoriesTitle": "الأصناف",
+    "noCategoriesMessage": "لا توجد أصناف متاحة لهذا النوع.",
+    "productPage": {
+        "similarProducts": "منتجات مشابهة",
+        "productDescription": "وصف المنتج"
+    },
+    "productInfo": {
+        "productOverview": "لمحة عن المنتج",
+        "addToCart": "أضف إلى السلة",
+        "addedToCart": "تمت الإضافة إلى السلة"
+    },
+    "productsTaps": {
+        "productTabs": "علامات تبويب المنتج",
+        "productDetails": "تفاصيل المنتج",
+        "productReviews": "تقييمات المنتج",
+        "ratingsAndReviews": "التقييمات و اراء الزبائن",
+        "addReview": "أضف تقييم",
+        "basedOnReviews": "بناءً على {count} تقييم",
+        "excellent": "رائع",
+        "oneReview": "1 تقييم"
+    },
+    "ProductListNew": "أضف إلى السلة",
+    "servicesBoxes": {
+        "secure_payments": {
+            "title": "مدفوعات آمنة",
+            "description": "نضمن لك مدفوعات آمنة بالكامل"
+        },
+        "best_prices": {
+            "title": "أفضل الأسعار",
+            "description": "أفضل الأسعار لشحن الكروت والجواهر"
+        },
+        "fast_shipping": {
+            "title": "شحن سريع",
+            "description": "احصل على شحنتك بسرعة وسهولة"
+        }
+    },
+    "footer_title": "اشترك في النشرة الإخبارية",
+    "footer_description": "اشترك في نشرتنا الإخبارية وفتح عالم من الفوائد الحصرية. كن أول من يعرف عن منتجاتنا الجديدة، العروض الخاصة، والتحديثات المثيرة.",
+    "subscribe_button": "اشترك",
+    "footer_links": {
+        "home": "الرئيسية",
+        "categories": "الفئات",
+        "shop": "التسوق",
+        "contact_us": "اتصل بنا"
+    },
+    "social_media": {
+        "facebook": "فيسبوك",
+        "twitter": "تويتر",
+        "vimeo": "فيميو",
+        "youtube": "يوتيوب"
+    },
+    "terms_and_conditions": "شروط الخدمة سياسة الخصوصية تم التطوير بواسطة",
+    "rights_reserved": "© 2024 جميع الحقوق محفوظة",
+    "testimonials": {
+        "heading": "آراء عملائنا",
+        "direction": "rtl",
+        "seeOn": "عرض على",
+        "reviews": [
+            {
+                "name": "عبدالعزيز",
+                "username": "@جيسيكا_ديفيس",
+                "avatar": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1731974766/wmxxykxyruszliwo3ahb.png",
+                "text": "للامانة افضل متجر بالتعامل وسرعة الانجاز",
+                "date": "17 يناير 2024"
+            },
+            {
+                "name": "ماري جويش",
+                "username": "@ماري_جويش",
+                "avatar": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1731974552/lb14rrpphfznmiofxwf3.png",
+                "text": "شحن سرع في اقل من 24 ساعه",
+                "date": "18 يناير 2024"
+            },
+            {
+                "name": "مينا",
+                "username": "@مارسيل_غلوك",
+                "avatar": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1731973803/lptyjiztr78v7dkyfgrf.webp",
+                "text": "يقدمون افضل عمل علي الاطلاق",
+                "date": "19 يناير 2024"
+            }
+        ]
+    }
+}

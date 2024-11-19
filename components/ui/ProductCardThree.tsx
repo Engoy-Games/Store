@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { MouseEventHandler } from "react";
 import { Currency } from "./currency";
 import { BsCart4 } from "react-icons/bs";
+import { useLocale } from "next-intl";
 
 interface ProductCardThreeProps {
   data: Product;
@@ -19,6 +20,7 @@ export const ProductCardThree: React.FC<ProductCardThreeProps> = ({ data }) => {
   const router = useRouter();
   const previewModal = usePreviewModal();
   const cart = useCart();
+  const currentLang = useLocale();
 
   const handleClick = () => {
     router.push(`/product/${data.id}`);
@@ -42,9 +44,9 @@ export const ProductCardThree: React.FC<ProductCardThreeProps> = ({ data }) => {
       {/* Product Info on the Left */}
       <div className="w-2/3 pr-6 flex flex-col justify-between">
         <div className="text-right">
-          <p className="text-xl font-extrabold text-gray-900">{data.name}</p>
+          <p className="text-xl font-extrabold text-gray-900">{currentLang == "ar" ? data.name : data.nameEn}</p>
           <p className="text-2xl font-semibold text-gray-800 mt-1">
-            <Currency value={data.price} currencySymbol="د.أ" />
+            <Currency value={data.price}/>
           </p>
           <hr className="border-t-2 border-gray-300 my-2" />
         </div>
@@ -59,7 +61,7 @@ export const ProductCardThree: React.FC<ProductCardThreeProps> = ({ data }) => {
             onClick={onAddToCart}
             className="w-full font-extrabold text-yellow-600 border border-yellow-500 rounded-lg px-6 py-2 hover:bg-yellow-500 hover:text-white transition-all duration-300 flex items-center justify-center"
           >
-            إضافة للسلة
+            {currentLang == "ar" ? "أضف إلى السلة" : "Add to Cart"}
             <BsCart4 className="ml-2" />
           </button>
         </div>

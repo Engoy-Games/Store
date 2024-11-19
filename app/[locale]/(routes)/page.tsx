@@ -12,6 +12,7 @@ import { ProductListNew } from "@/components/ProductListNew";
 import CategoryDisplay from "@/components/CategoryDisplay";
 import sliderOne from "@/public/1.jpg";
 import { ProductListThree } from "@/components/ProductListThree";
+import { getTranslations } from "next-intl/server";
 
 export const revalidate = 0;
 
@@ -19,6 +20,8 @@ const HomePage = async () => {
   // Fetch all billboards and products on the server side
   const billboards: BillboardType[] = await getBillboards();
   const products = await getProducts({ isFeatured: true });
+
+  const t = await getTranslations();
 
   const SpeashialProducts = await getProducts({
     categoryId: "6712b6b5ef2bd5e550f49c78",
@@ -35,22 +38,22 @@ const HomePage = async () => {
         <BillboardSlider data={billboards} />
 
         <ProductListNew
-          title="احدث المنتجات المضافة" // Title of the section
-          items={products} // Complete product data
-          productCount={6} // Adjust this number as needed
+          title={t("home.newProducts")}
+          items={products}
+          productCount={6}
         />
 
         <CategoryDisplay
           backgroundImage={sliderOne.src}
-          title="منتجات الإضاءة الحديثة"
-          description="تصميم مريح للجلوس لفترات طويلة لتجربة لعب سهلة وممتعة"
+          title={t("category.lighting")}
+          description={t("home.comfortableDesign")}
           products={SpeashialProducts}
         />
 
         <AfterBillboard />
 
         <ProductListThree
-          title="منتجات الإضاءة الحديثة"
+          title={t("home.specialProducts")}
           items={SpeashialProducts}
           productCount={6}
         />
@@ -59,8 +62,8 @@ const HomePage = async () => {
 
         <CategoryDisplay
           backgroundImage={sliderOne.src}
-          title="منتجات الإضاءة الحديثة"
-          description="تصميم مريح للجلوس لفترات طويلة لتجربة لعب سهلة وممتعة"
+          title={t("category.lighting")}
+          description={t("home.comfortableDesign")}
           products={SpeashialProducts}
         />
 
@@ -71,8 +74,3 @@ const HomePage = async () => {
 };
 
 export default HomePage;
-
-// <div className="flex flex-col gap-y-8 sm:px-6 lg:px-8 px-[100px]">
-//   {/* Use fetched products */}
-//   <ProductList title="احدث المنتجات المضافة" items={products} />
-// </div>

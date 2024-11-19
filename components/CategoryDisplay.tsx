@@ -1,45 +1,60 @@
 "use client";
 
 import { IconButton } from "@/components/ui/icon-button";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Product } from "@/types";
 import { Currency } from "@/components/ui/currency";
 import { BsCart4 } from "react-icons/bs";
-import { useCart } from "@/hooks/use-cart"; // Import your cart hook or context if you have it
+import { useCart } from "@/hooks/use-cart";
 import {
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
+import { useLocale } from "next-intl";
 
 interface CategoryDisplayProps {
   backgroundImage: string;
   title: string;
   description: string;
-  products: Product[];
+  products?: Product[]; // Optional to allow undefined as a valid value
 }
 
 const CategoryDisplay: React.FC<CategoryDisplayProps> = ({
   backgroundImage,
   title,
   description,
-  products,
+  products = [],
 }) => {
   const [startIndex, setStartIndex] = useState(0);
+  const [mounted, setMounted] = useState(false); // To handle hydration error
   const itemsPerPage = 4;
-  const { addItem } = useCart(); // Assuming `useCart` provides the `addItem` function
+  const { addItem } = useCart();
+  const currentLang = useLocale();
 
-  const visibleProducts = products.slice(startIndex, startIndex + itemsPerPage);
+  useEffect(() => {
+    setMounted(true); // Set mounted to true after the component is mounted
+  }, []);
+
+  if (!mounted) return null; // Avoid rendering until mounted on the client side
+
+  // Calculate the visible products using startIndex and itemsPerPage
+  const visibleProducts = [];
+  for (let i = startIndex; i < startIndex + itemsPerPage && i < products.length; i++) {
+    visibleProducts.push(products[i]);
+  }
 
   const handleNext = () => {
-    if (startIndex + itemsPerPage < products.length) {
-      setStartIndex(startIndex + itemsPerPage);
+    // Move to next product if there's room
+    if (startIndex + 1 < products.length) {
+      setStartIndex((prevIndex) => prevIndex + 1); // Increment by 1 for single item shift
     }
   };
 
   const handlePrevious = () => {
-    if (startIndex - itemsPerPage >= 0) {
-      setStartIndex(startIndex - itemsPerPage);
+    // Move to previous product if not at the start
+    if (startIndex > 0) {
+      setStartIndex((prevIndex) => prevIndex - 1); // Decrement by 1 for single item shift
     }
   };
 
@@ -61,10 +76,13 @@ const CategoryDisplay: React.FC<CategoryDisplayProps> = ({
 
       {/* Slider Controls */}
       <div className="flex justify-between items-center z-10 p-8 w-full px-20">
-        {/* Slider buttons */}
         <div className="flex space-x-4 mb-6">
           <button
-            className="w-12 h-12 text-white text-3xl p-2 rounded-full border-2 border-white bg-opacity-50"
+            className={`w-12 h-12 text-white text-3xl p-2 rounded-full border-2 border-white ${
+              startIndex === 0
+                ? "text-[#ffffff66] border-[#ffffff66] cursor-not-allowed"
+                : "bg-opacity-50 transition-transform transform hover:scale-105 hover:bg-opacity-70"
+            }`}
             onClick={handlePrevious}
             disabled={startIndex === 0}
           >
@@ -72,9 +90,13 @@ const CategoryDisplay: React.FC<CategoryDisplayProps> = ({
           </button>
 
           <button
-            className="w-12 h-12 text-white text-3xl p-2 rounded-full border-2 border-white bg-opacity-50"
+            className={`w-12 h-12 text-white text-3xl p-2 rounded-full border-2 border-white ${
+              startIndex + 1 >= products.length
+                ? "text-[#ffffff66] border-[#ffffff66] cursor-not-allowed"
+                : "bg-opacity-50 transition-transform transform hover:scale-105 hover:bg-opacity-70"
+            }`}
             onClick={handleNext}
-            disabled={startIndex + itemsPerPage >= products.length}
+            disabled={startIndex + 1 >= products.length}
           >
             <MdOutlineKeyboardArrowRight />
           </button>
@@ -86,40 +108,44 @@ const CategoryDisplay: React.FC<CategoryDisplayProps> = ({
       </div>
 
       {/* Products */}
-      <div className="relative z-10 rounded-t-lg shadow-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {visibleProducts.map((product, index) => (
-          <div
-            key={index}
-            className="bg-white border rounded-lg shadow-md flex flex-col items-center text-center transition hover:shadow-lg"
-          >
-            <div className="w-[320px] h-[270px] relative mb-4">
-              <Image
-                src={product.images[0].url}
-                alt={product.name}
-                layout="fill"
-                objectFit="cover"
-                className="rounded-lg"
-              />
+      {visibleProducts.length > 0 ? (
+        <div className="relative z-10 rounded-t-lg shadow-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 transition-transform duration-500 ease-in-out">
+          {visibleProducts.map((product, index) => (
+            <div
+              key={product.id} // Use a unique key for each product, assuming product.id is available
+              className="bg-white border rounded-lg shadow-md flex flex-col items-center text-center transition-transform transform hover:scale-105 hover:shadow-xl hover:ease-in-out hover:duration-300"
+            >
+              <div className="w-[320px] h-[270px] relative mb-4 transition-transform ease-in-out hover:scale-105">
+                <Image
+                  src={product.images[0].url}
+                  alt={product.name}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="w-[230px] text-lg font-semibold mb-2">{currentLang == "ar" ? product.name : product.nameEn}</h3>
+                <p className="font-bold mb-4">
+                  <Currency value={product.price} />
+                </p>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addItem(product);
+                  }}
+                  className="w-full font-extrabold text-yellow-600 border border-yellow-500 rounded-lg px-6 py-2 hover:bg-yellow-500 hover:text-white transition-all duration-300 flex items-center justify-center"
+                >
+                  {currentLang == "ar" ? "أضف إلى السلة" : "Add to Cart"}
+                  <BsCart4 className="ml-2" />
+                </button>
+              </div>
             </div>
-            <div className="p-4">
-              <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-              <p className="font-bold mb-4">
-                <Currency value={product.price} />
-              </p>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  addItem(product);
-                }}
-                className="w-full font-extrabold text-yellow-600 border border-yellow-500 rounded-lg px-6 py-2 hover:bg-yellow-500 hover:text-white transition-all duration-300 flex items-center justify-center"
-              >
-                إضافة للسلة
-                <BsCart4 className="ml-2" />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-white mt-8">No products available</p> // Fallback message
+      )}
     </div>
   );
 };
