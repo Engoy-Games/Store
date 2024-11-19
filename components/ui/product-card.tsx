@@ -1,39 +1,42 @@
-'use client'
+"use client";
 
-import { IconButton } from '@/components/ui/icon-button'
-import { useCart } from '@/hooks/use-cart'
-import usePreviewModal from '@/hooks/use-preview-modal'
-import { Product } from '@/types'
-import { Expand, ShoppingCart } from 'lucide-react'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { MouseEventHandler } from 'react'
-import { Currency } from './currency'
+import { IconButton } from "@/components/ui/icon-button";
+import { useCart } from "@/hooks/use-cart";
+import usePreviewModal from "@/hooks/use-preview-modal";
+import { Product } from "@/types";
+import { Expand, ShoppingCart } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { MouseEventHandler } from "react";
+import { Currency } from "./currency";
+import { useLocale } from "next-intl";
 
 interface ProductCard {
-  data: Product
+  data: Product;
 }
 
 export const ProductCard: React.FC<ProductCard> = ({ data }) => {
-  const router = useRouter()
-  const previewModal = usePreviewModal()
-  const cart = useCart()
+  const router = useRouter();
+  const previewModal = usePreviewModal();
+  const cart = useCart();
+
+  const currentLang = useLocale();
 
   const handleClick = () => {
-    router.push(`/product/${data.id}`)
-  }
+    router.push(`/product/${data.id}`);
+  };
 
   const onPreview: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.stopPropagation()
+    e.stopPropagation();
 
-    previewModal.onOpen(data)
-  }
+    previewModal.onOpen(data);
+  };
 
   const onAddToCart: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.stopPropagation()
+    e.stopPropagation();
 
-    cart.addItem(data)
-  }
+    cart.addItem(data);
+  };
 
   return (
     <div
@@ -63,14 +66,14 @@ export const ProductCard: React.FC<ProductCard> = ({ data }) => {
       </div>
 
       <div>
-        <p className="font-semibold text-lg">{data.name}</p>
+        <p className="font-semibold text-lg">{currentLang == "ar" ? data.name : data.nameEn}</p>
 
-        <p className="text-sm text-gray-500">{data.category.name}</p>
+        <p className="text-sm text-gray-500">{currentLang == "ar" ? data.category.name : data.category.nameEn}</p>
       </div>
 
       <div className="flex items-center justify-between">
         <Currency value={data.price} />
       </div>
     </div>
-  )
-}
+  );
+};

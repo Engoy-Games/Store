@@ -12,13 +12,37 @@ import {
   ClerkProvider,
 } from "@clerk/nextjs";
 import { FaHome, FaShoppingCart, FaThList, FaPhoneAlt } from "react-icons/fa";
-import { usePathname } from "next/navigation"; // Correct import for app directory
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useState, startTransition } from "react";
+import { ClipLoader } from "react-spinners"; // Importing the spinner
+import { useTranslations, useLocale } from "next-intl"; // Importing the translation hook
+import { MdOutlineLanguage } from "react-icons/md";
 
 // Navbar component
 export const Navbar = () => {
-  const pathname = usePathname(); // Correct usePathname hook
-  const [hovered, setHovered] = useState<number | null>(null); // State for hover effect
+  const pathname = usePathname();
+  const router = useRouter();
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false); // Loading state
+
+  // Use the translation hook to get translations for navbar
+  const t = useTranslations("navbar");
+
+  // Determine current language from the path
+  const currentLanguage = useLocale();
+  const nextLanguage = currentLanguage === "en" ? "ar" : "en"; // Toggle between 'en' and 'ar'
+
+  // Language switcher handler
+  const onLanguageSelect = (lang: string) => {
+    setLoading(true); // Start loading spinner
+
+    // Perform the locale switch
+    startTransition(() => {
+      const currentPathname = pathname.replace(/^\/(en|ar)/, ""); // Remove existing locale prefix
+      router.replace(`/${lang}${currentPathname}`); // Add the new locale
+      setLoading(false); // Stop the spinner after the transition
+    });
+  };
 
   // Helper to detect active link
   const isActive = (path: string) => pathname === path;
@@ -38,16 +62,33 @@ export const Navbar = () => {
               </SignedIn>
               <NavbarActions />
             </ClerkProvider>
+
+            {/* Language Switcher Button */}
+            <button
+              onClick={() => onLanguageSelect(nextLanguage)} // Change language on click
+              disabled={loading} // Disable button while loading
+              className={`flex items-center gap-2 px-4 py-2 rounded-full font-bold bg-white text-black hover:bg-gray-200 transition duration-300 ${loading ? "cursor-wait" : ""}`}
+            >
+              <MdOutlineLanguage className="text-lg" />
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <ClipLoader size={12} color="#000" loading={loading} /> {/* Spinner */}
+                  Switching...
+                </span>
+              ) : (
+                <span>{currentLanguage == "ar" ? "English" : "عربي"}</span>
+              )}
+            </button>
           </div>
 
-          {/* Main navigation with icons and hover/active effects */}
-          <div className="flex items-center gap-[172px]">
+          {/* Main navigation */}
+          <div className="flex items-center mr-12">
             <div className="flex items-center gap-[30px]">
-              {[
-                { href: "/contact", label: "اتصل بنا", icon: <FaPhoneAlt /> },
-                { href: "/category", label: "الأصناف", icon: <FaThList /> },
-                { href: "/shop", label: "المتجر", icon: <FaShoppingCart /> },
-                { href: "/", label: "الصفحة الرئيسية", icon: <FaHome /> },
+              {[ 
+                { href: "/contact", label: t("contact"), icon: <FaPhoneAlt /> },
+                { href: "/category", label: t("category"), icon: <FaThList /> },
+                { href: "/shop", label: t("shop"), icon: <FaShoppingCart /> },
+                { href: "/", label: t("home"), icon: <FaHome /> }
               ].map((link, index) => (
                 <div key={index} className="relative flex flex-col items-center w-200px">
                   <Link
@@ -60,11 +101,10 @@ export const Navbar = () => {
                   >
                     {link.icon} {link.label}
                   </Link>
-                  {/* Underline for active link */}
                   {isActive(link.href) && (
                     <div
                       className="absolute top-5 w-[40px] h-[2px] bg-white transition-all duration-300"
-                      style={{ left: '50%', transform: 'translateX(-50%)' }}
+                      style={{ left: "50%", transform: "translateX(-50%)" }}
                     ></div>
                   )}
                 </div>
@@ -72,17 +112,18 @@ export const Navbar = () => {
             </div>
           </div>
 
-          {/* Logo on the right */}
-          <Link href="/" className="flex items-center z-15 cursor-pointer relative">
-            <Image
-              className="w-[70px] h-[67px] mr-4"
-              src="/svg/logo.svg"
-              alt="Logo"
-              width={70}
-              height={67}
-            />
-          </Link>
-
+          {/* Logo */}
+          <div className="flex items-center z-15 cursor-pointer relative gap-4">
+            <Link href="/" className="flex items-center">
+              <Image
+                className="w-[70px] h-[67px] mr-4"
+                src="/svg/logo.svg"
+                alt="Logo"
+                width={70}
+                height={67}
+              />
+            </Link>
+          </div>
         </div>
       </Container>
     </div>

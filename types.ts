@@ -2,7 +2,9 @@
 export interface Category {
   id: string;
   name: string;
+  nameEn: string;
   categoryDescription: string;
+  categoryDescriptionEn: string;
   categoryType: CategoryType;
   billboard: Billboard;
   billboardId: string;
@@ -17,6 +19,7 @@ export interface Category {
 export interface Billboard {
   id: string;
   label: string;
+  labelEn: string;
   imageUrl: string;
   isBillboardActive: boolean;
 }
@@ -25,10 +28,12 @@ export interface Billboard {
 export interface Product {
   id: string;
   name: string;
+  nameEn: String;
   category: Category;
   categoryId: string;
   price: number; // Changed to `number` to align with the backend
   productDescription: string;
+  productDescriptionEn: string;
   isFeatured: boolean;
   isArchived: boolean;
   images: Image[];

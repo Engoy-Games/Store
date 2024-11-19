@@ -5,6 +5,7 @@ import { Info } from "@/components/info";
 import { ProductList } from "@/components/product-list";
 import { Container } from "@/components/ui/container";
 import ProductTabs from "@/components/ProductTabs";
+import { getLocale, getTranslations } from "next-intl/server";
 
 interface ProductPageProps {
   params: {
@@ -17,6 +18,11 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   const suggestedProducts = await getProducts({
     categoryId: product?.category?.id,
   });
+
+  console.log(product);
+
+  const currentLang = await getLocale();
+  const t = await getTranslations("productPage");
 
   return (
     <div className="bg-gradient-to-bl from-[#7f36b9] via-[#6a3fbf] to-[#625bff] py-[80px] px-8">
@@ -33,10 +39,10 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
           </div>
 
           {/* Product Tabs */}
-          <ProductTabs description={product.productDescription} />
+          <ProductTabs description={currentLang == "ar" ? product.productDescription : product.productDescriptionEn} />
 
           {/* Suggested Products */}
-          <ProductList title="منتجات مشابهة" items={suggestedProducts} />
+          <ProductList title={t("similarProducts")} items={suggestedProducts} />
         </div>
       </Container>
     </div>
