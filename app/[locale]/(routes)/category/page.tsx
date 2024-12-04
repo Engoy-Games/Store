@@ -9,7 +9,7 @@ import { getTranslations } from "next-intl/server";
 const CategoryPage: React.FC = async () => {
     const categories = await getCategories();
 
-    console.log(categories)
+    // console.log(categories)
 
     const t = await getTranslations();
     

@@ -5,6 +5,7 @@ import { useCart } from '@/hooks/use-cart'
 import { useEffect, useState } from 'react'
 import { CartItems } from './components/cart-items'
 import { Summary } from './components/summary'
+import { ProductList } from "@/components/product-list";
 import { useTranslations } from 'next-intl' // Importing the translations hook
 
 const CartPage = () => {
@@ -15,6 +16,12 @@ const CartPage = () => {
   useEffect(() => {
     setIsMounted(true)
   }, [])
+
+  useEffect(() => {
+    // You can fetch the product by ID here (use a valid ID for testing)
+    const productId = '6713a8185deece042c46c466' // Example product ID
+    cart.fetchProductById(productId)
+  }, []) // Empty dependency array, runs only once when the component mounts
 
   if (!isMounted) return null
 
@@ -38,6 +45,17 @@ const CartPage = () => {
             </div>
 
             <Summary />
+          </div>
+
+          {/* Display the fetched product details */}
+          <div className="mt-12">
+            {cart.product ? (
+              <div>
+                 <ProductList title={t('similarProducts')} items={[cart.product]} />
+              </div>
+            ) : (
+              <p className="text-white">Product not found.</p> // Error state if no product
+            )}
           </div>
 
           {/* Optional: Add a Continue Shopping Button */}

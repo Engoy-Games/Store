@@ -32,7 +32,7 @@ export function ContactSection() {
       alert("Please fill in all fields.");
       return;
     }
-    console.log("Form submitted:", formData);
+    // console.log("Form submitted:", formData);
   };
 
   return (

@@ -23,7 +23,8 @@
   "cart": {
     "title": "Shopping Cart",
     "emptyMessage": "Your cart is empty.",
-    "continueShopping": "Continue Shopping"
+    "continueShopping": "Continue Shopping",
+    "relatedProducts": "Related Products"
   },
   "categoriesTitle": "Categories",
   "noCategoriesMessage": "No categories available for this type.",
@@ -101,9 +102,48 @@
         "name": "Mina",
         "username": "@Mina",
         "avatar": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1731973803/lptyjiztr78v7dkyfgrf.webp",
-        "text": "They do the best work ever",  
+        "text": "They do the best work ever",
         "date": "Jan 19, 2024"
       }
     ]
+  },
+  "ads": [
+    {
+      "icon": "FaBell",
+      "text": "Best online discounts 🌏"
+    },
+    {
+      "icon": "FaClock",
+      "text": "Fast shipping within 24 hours 🕛"
+    },
+    {
+      "icon": "FaFingerprint",
+      "text": "100% secure shipping 🔐"
+    },
+    {
+      "icon": "FaDollarSign",
+      "text": "Get the best prices now 💸"
+    },
+    {
+      "icon": "FaTags",
+      "text": "Discounts on all products 🏷️"
+    }
+  ],
+  "close": "Close",
+  "productOverview": "Product Overview",
+  "addToCart": "Add to Cart",
+  "addedToCart": "Added to Cart",
+  "productFilters": {
+    "category": "Products",
+    "rating": "Rating",
+    "priceRange": "Price Range",
+    "filters": "Filters",
+    "lowPrice": "Low Price",
+    "highPrice": "High Price",
+    "categories": "Categories"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
   }
 }

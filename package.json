@@ -39,6 +39,7 @@
     "react-map-gl": "^7.1.7",
     "react-slick": "^0.29.0",
     "react-spinners": "^0.14.1",
+    "react-window": "^1.8.10",
     "slick-carousel": "^1.8.1",
     "swiper": "^11.1.14",
     "tailwind-merge": "^1.14.0",
@@ -47,6 +48,7 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
-    "@types/react-slick": "^0.23.13"
+    "@types/react-slick": "^0.23.13",
+    "@types/react-window": "^1.8.8"
   }
 }
