@@ -145,5 +145,11 @@
   "pagination": {
     "previous": "Previous",
     "next": "Next"
+  },
+  "PrizeWheelPopup": {
+    "spin": "Spin the wheel",
+    "try": "Try",
+    "betterLuck": "Better luck next time!",
+    "close": "Close"
   }
 }

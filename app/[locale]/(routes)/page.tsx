@@ -1,4 +1,3 @@
-// Server Component (HomePage)
 import { getBillboards } from "@/actions/get-billboards";
 import { getProducts } from "@/actions/get-products";
 import { Billboard as BillboardType } from "@/types";
@@ -14,6 +13,7 @@ import sliderOne from "@/public/1.jpg";
 import { ProductListThree } from "@/components/ProductListThree";
 import { getTranslations } from "next-intl/server";
 import CircularImageSlider from "@/components/CircularImageSlider";
+import PrizeWheelPopup from "@/components/PrizeWheelPopup";  // Import the client component
 
 export const revalidate = 0;
 
@@ -27,8 +27,6 @@ const HomePage = async () => {
   const SpeashialProducts = await getProducts({
     categoryId: "6712b6b5ef2bd5e550f49c78",
   });
-
-  // console.log(SpeashialProducts);
 
   return (
     <Container>
@@ -71,6 +69,9 @@ const HomePage = async () => {
         />
 
         <Testimonials />
+
+        {/* Add the PrizeWheelPopup component here */}
+        <PrizeWheelPopup />
       </div>
     </Container>
   );
