@@ -48,14 +48,14 @@ export const Navbar = () => {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <div className="bg-dark mx-[100px]">
+    <div className="bg-dark mx-[100px] relative z-50">
       <Container>
         <div className="flex h-[100px] justify-between items-center px-4 sm:px-6 lg:px-8">
           {/* Navbar actions: Clerk (Sign-in, User button) + Cart */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6 text text-white">
             <ClerkProvider>
               <SignedOut>
-                <SignInButton />
+                <SignInButton/>
               </SignedOut>
               <SignedIn>
                 <UserButton />
@@ -85,10 +85,10 @@ export const Navbar = () => {
           <div className="flex items-center mr-12">
             <div className="flex items-center gap-[30px]">
               {[ 
-                { href: "/contact", label: t("contact"), icon: <FaPhoneAlt /> },
-                { href: "/category", label: t("category"), icon: <FaThList /> },
-                { href: "/shop", label: t("shop"), icon: <FaShoppingCart /> },
-                { href: "/", label: t("home"), icon: <FaHome /> }
+                { href: `/${currentLanguage}/contact`, label: t("contact"), icon: <FaPhoneAlt /> },
+                { href: `/${currentLanguage}/category`, label: t("category"), icon: <FaThList /> },
+                { href: `/${currentLanguage}/shop`, label: t("shop"), icon: <FaShoppingCart /> },
+                { href: `/${currentLanguage}`, label: t("home"), icon: <FaHome /> }
               ].map((link, index) => (
                 <div key={index} className="relative flex flex-col items-center w-200px">
                   <Link
@@ -116,8 +116,8 @@ export const Navbar = () => {
           <div className="flex items-center z-15 cursor-pointer relative gap-4">
             <Link href="/" className="flex items-center">
               <Image
-                className="w-[70px] h-[67px] mr-4"
-                src="/svg/logo.svg"
+                className="w-[120px] h-[120px] mr-4"
+                src="/svg/logo2.svg"
                 alt="Logo"
                 width={70}
                 height={67}

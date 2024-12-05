@@ -15,3 +15,8 @@ body,
   --variable-collection-yello-color: rgba(255, 215, 0, 1);
   --variable-collection-yello-color-2: rgba(192, 151, 107, 1);
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}

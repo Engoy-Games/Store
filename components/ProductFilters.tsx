@@ -1,15 +1,12 @@
-// ProductFilters.tsx
 "use client";
 
 import React, { useState } from "react";
 import { ProductList } from "@/components/product-list";
 import { Product } from "@/types";
+import { Category } from "@/types";
 import { FaFilterCircleDollar } from "react-icons/fa6"; // Import the filter icon
-
-interface Category {
-  id: string;
-  name: string;
-}
+import { useTranslations, useLocale } from "next-intl"; // Import the translation hook
+import makeAction from "@/components/makeAction"; // Import the makeAction function
 
 interface Filters {
   priceRange: "low" | "high" | null;
@@ -21,7 +18,12 @@ interface ProductFiltersProps {
   categories: Category[];
 }
 
-const ProductFilters: React.FC<ProductFiltersProps> = ({ products, categories }) => {
+const ProductFilters: React.FC<ProductFiltersProps> = ({
+  products,
+  categories,
+}) => {
+  const t = useTranslations("productFilters"); // Get translations for this page
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [filters, setFilters] = useState<Filters>({
     priceRange: null,
@@ -29,6 +31,10 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({ products, categories })
   });
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [allProducts, setAllProducts] = useState<Product[]>(products); // Store all products here
+
+  const currentLang = useLocale(); // Get the current locale
 
   // Function to handle category selection
   const handleCategoryChange = (category: string) => {
@@ -37,7 +43,10 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({ products, categories })
   };
 
   // Function to handle filter change
-  const handleFilterChange = (filterName: keyof Filters, value: Filters[keyof Filters]) => {
+  const handleFilterChange = (
+    filterName: keyof Filters,
+    value: Filters[keyof Filters]
+  ) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [filterName]: value,
@@ -46,7 +55,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({ products, categories })
   };
 
   // Filtered Products
-  const filteredProducts = products
+  const filteredProducts = allProducts
     .filter((product) => {
       // Filter by category if selected
       if (selectedCategory) {
@@ -65,27 +74,28 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({ products, categories })
     });
 
   return (
-    <div className="text-black min-h-screen p-10">
+    <div className="text-black min-h-screen p-10  ">
       {/* Filters and Categories */}
-      <div className="flex justify-between items-center mb-8 border-b border-gray-300 pb-4 px-[100px]"> {/* Adjust border class here */}
+      <div className="flex justify-between items-center mb-8 border-b border-gray-300 pb-4 px-[100px]">
         {/* Filters Dropdown Section */}
         <div className="relative">
           <button
-            className="bg-white font-semibold text-lg py-2 px-4 border border-gray-300 rounded flex items-center gap-2" // Adjust border class here as well
+            className="bg-white font-semibold text-lg py-2 px-4 border border-gray-300 rounded flex items-center gap-2"
             onClick={() => setFilterDropdownOpen(!filterDropdownOpen)}
           >
-            Filters
-            <FaFilterCircleDollar className="text-xl" /> {/* Add the filter icon here */}
+            {t("filters")}
+            <FaFilterCircleDollar className="text-xl" />{" "}
+            {/* Add the filter icon */}
           </button>
           {filterDropdownOpen && (
-            <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg z-10"> {/* Adjust border class here */}
+            <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg z-10">
               <button
                 onClick={() => handleFilterChange("priceRange", "low")}
                 className={`block w-full text-left px-4 py-2 hover:bg-gray-100 ${
                   filters.priceRange === "low" ? "font-bold" : ""
                 }`}
               >
-                Low Price
+                {t("lowPrice")}
               </button>
               <button
                 onClick={() => handleFilterChange("priceRange", "high")}
@@ -93,9 +103,8 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({ products, categories })
                   filters.priceRange === "high" ? "font-bold" : ""
                 }`}
               >
-                High Price
+                {t("highPrice")}
               </button>
-              {/* Additional filters can be added here */}
             </div>
           )}
         </div>
@@ -103,16 +112,20 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({ products, categories })
         {/* Categories Dropdown Section */}
         <div className="relative">
           <button
-            className="bg-white font-semibold text-lg py-2 px-4 border border-gray-300 rounded flex items-center gap-2" // Adjust border class here
+            className="bg-white font-semibold text-lg py-2 px-4 border border-gray-300 rounded flex items-center gap-2"
             onClick={() => setCategoryDropdownOpen(!categoryDropdownOpen)}
           >
-            Categories
-            <span className={`transform transition-transform ${categoryDropdownOpen ? "rotate-180" : "rotate-0"}`}>
+            {t("categories")}
+            <span
+              className={`transform transition-transform ${
+                categoryDropdownOpen ? "rotate-180" : "rotate-0"
+              }`}
+            >
               ▼
             </span>
           </button>
           {categoryDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg z-10"> {/* Adjust border class here */}
+            <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg z-10">
               {categories.map((category) => (
                 <button
                   key={category.id}
@@ -121,7 +134,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({ products, categories })
                     selectedCategory === category.id ? "font-bold" : ""
                   }`}
                 >
-                  {category.name}
+                  {currentLang == "ar" ? category.name : category.nameEn}
                 </button>
               ))}
             </div>
@@ -130,7 +143,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({ products, categories })
       </div>
 
       {/* Product List with Filtered Products */}
-      <ProductList title="Products" items={filteredProducts} />
+      <ProductList title={t("category")} items={filteredProducts} />
     </div>
   );
 };

@@ -5,44 +5,49 @@ import { ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
 import { Currency } from "./ui/currency";
 import { useState, useEffect } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useCart } from "@/hooks/use-cart";
+import DynamicForm from "./DynamicForm";
 
-interface InfoProps {
+interface InfoWithFormProps {
   data: Product;
+  categoryFields: any[];
+  currentLang: string;
 }
 
-export const Info: React.FC<InfoProps> = ({ data }) => {
-  const t = useTranslations(); // Hook for translations
-  const currentLang = useLocale(); // Hook for locale
+export const InfoWithForm: React.FC<InfoWithFormProps> = ({
+  data,
+  categoryFields,
+  currentLang,
+}) => {
+  const t = useTranslations();
   const cart = useCart(); // Access the cart hook
-  const [isClicked, setIsClicked] = useState(false);
+  const [isAdded, setIsAdded] = useState(false); // Persistent state for the button
 
-  // Check if the item has already been added to the cart on component mount
+  // Check if the item is already added when the component mounts
   useEffect(() => {
     const addedProduct = localStorage.getItem(`addedToCart_${data.id}`);
     if (addedProduct) {
-      setIsClicked(true);
+      setIsAdded(true);
     }
   }, [data.id]);
 
   const handleClick = () => {
-    // Add the item to the cart using the cart hook
-    cart.addItem(data); // Assuming addItem is available in useCart
+    if (!isAdded) {
+      // Add the item to the cart only if it hasn't been added
+      cart.addItem(data);
 
-    // Persist cart state in localStorage for page refresh
-    localStorage.setItem(`addedToCart_${data.id}`, "true");
+      // Set the button to "addedToCart" state
+      setIsAdded(true);
 
-    // Set clicked state for button feedback
-    setIsClicked(true);
-
-    // Reset the button after feedback (simulating the timeout)
-    setTimeout(() => setIsClicked(false), 1500);
+      // Persist the state in localStorage
+      localStorage.setItem(`addedToCart_${data.id}`, "true");
+    }
   };
 
   return (
     <div className="flex flex-col md:flex-row items-start gap-8">
-      {/* Text Section */}
+      {/* Product Info */}
       <div className="flex-1 text-right mt-6">
         <h1 className="text-3xl font-bold text-white">
           {currentLang == "ar" ? data?.name : data?.nameEn}
@@ -50,7 +55,7 @@ export const Info: React.FC<InfoProps> = ({ data }) => {
 
         <div className="mt-3 flex items-end justify-between">
           <p className="text-2xl text-white">
-            <Currency value={data?.price} color="white"/>
+            <Currency value={data?.price} color="white" />
           </p>
         </div>
 
@@ -65,18 +70,27 @@ export const Info: React.FC<InfoProps> = ({ data }) => {
             : data?.category?.categoryDescriptionEn}
         </p>
 
-        {/* Add to Cart Button with Outline and Filled on Click */}
+        {/* Dynamic Form */}
+        {categoryFields && (
+          <DynamicForm
+            fields={categoryFields}
+            currentLang={currentLang}
+            submitForm={() => console.log("Form Submitted")}
+          />
+        )}
+
+        {/* Add to Cart Button */}
         <div className="mt-10 flex items-center gap-x-3">
           <Button
             onClick={handleClick}
             aria-label={t("addToCart")}
             className={`cursor-pointer w-full justify-center flex items-center gap-x-2 text-black ${
-              isClicked
+              isAdded
                 ? "bg-black text-white border-black"
                 : "bg-transparent border-2 border-white text-white"
             } hover:bg-white hover:text-black hover:border-black transition-all duration-300 ease-in-out`}
           >
-            {isClicked ? t("addedToCart") : t("addToCart")}
+            {isAdded ? t("addedToCart") : t("addToCart")}
             <ShoppingCart />
           </Button>
         </div>

@@ -8,6 +8,7 @@ import Head from "next/head";
 import cricle from "@/public/cricle.png";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import Ad  from "@/components/Ad";
 
 export const metadata = {
   title: "Enjoy Games",
@@ -40,6 +41,8 @@ export default async function RootLayout({
           <meta name="twitter:image" content={metadata.image} />
         </Head>
         <body className="relative">
+          <Ad />
+          <Navbar />
           <ModalProvider />
           <ToastProvider />
           <Image
@@ -47,8 +50,7 @@ export default async function RootLayout({
             alt="circle"
             className="absolute -top-20 right-6 rotate-90 z-0"
           />
-          <Navbar />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 z-10">{children}</main>
           <Footer />
         </body>
       </html>

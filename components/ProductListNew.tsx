@@ -18,13 +18,6 @@ export const ProductListNew: React.FC<ProductListNewProps> = ({
 
   return (
     <div className="space-y-4 px-[95px] pb-[20px] pt-[-20px]">
-      {/* Title Section */}
-      <div className="relative text-center mb-8">
-        <h2 className="text-5xl font-extrabold text-white p-4 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-transparent bg-clip-text transform transition-all duration-300 hover:scale-105 tracking-tight">
-          {title}
-        </h2>
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[100px] h-[2px] bg-white"></div>
-      </div>
 
       {/* Check for empty results */}
       {displayedItems.length === 0 ? (

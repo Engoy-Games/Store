@@ -1,11 +1,14 @@
+// pages/product/[productId].tsx
 import { getProduct } from "@/actions/get-product";
 import { getProducts } from "@/actions/get-products";
+import { getCategory } from "@/actions/get-category";
 import { Gallery } from "@/components/gallery";
-import { Info } from "@/components/info";
 import { ProductList } from "@/components/product-list";
 import { Container } from "@/components/ui/container";
 import ProductTabs from "@/components/ProductTabs";
 import { getLocale, getTranslations } from "next-intl/server";
+import dynamic from "next/dynamic";
+import { InfoWithForm } from "@/components/InfoWithForm";
 
 interface ProductPageProps {
   params: {
@@ -18,8 +21,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   const suggestedProducts = await getProducts({
     categoryId: product?.category?.id,
   });
-
-  console.log(product);
+  const category = await getCategory(product?.category?.id);
 
   const currentLang = await getLocale();
   const t = await getTranslations("productPage");
@@ -31,15 +33,25 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
           <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
             {/* Product Gallery */}
             <Gallery images={product.images} />
-            
-            {/* Product Info Section */}
+
+            {/* Product Info with Form */}
             <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-              <Info data={product} />
+              <InfoWithForm
+                data={product}
+                categoryFields={category?.fields}
+                currentLang={currentLang}
+              />
             </div>
           </div>
 
           {/* Product Tabs */}
-          <ProductTabs description={currentLang == "ar" ? product.productDescription : product.productDescriptionEn} />
+          <ProductTabs
+            description={
+              currentLang == "ar"
+                ? product.productDescription
+                : product.productDescriptionEn
+            }
+          />
 
           {/* Suggested Products */}
           <ProductList title={t("similarProducts")} items={suggestedProducts} />
