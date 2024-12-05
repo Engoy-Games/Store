@@ -32,7 +32,7 @@ export const Info: React.FC<InfoProps> = ({ data }) => {
 
         <div className="mt-3 flex items-end justify-between">
           <p className="text-2xl text-white">
-            <Currency value={data?.price} />
+            <Currency value={data?.price} color="white"/>
           </p>
         </div>
 
