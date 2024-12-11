@@ -17,7 +17,7 @@ export const ProductListNew: React.FC<ProductListNewProps> = ({
   const displayedItems = items.slice(0, productCount);
 
   return (
-    <div className="space-y-4 px-[95px] pb-[20px] pt-[-20px]">
+    <div className="space-y-4 px-[50px] pb-[50px] pt-[-20px]">
 
       {/* Check for empty results */}
       {displayedItems.length === 0 ? (

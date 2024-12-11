@@ -86,7 +86,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 // Main component that displays both products
 const AfterBillboard: React.FC = () => {
   return (  
-    <div className="pt-[250px] w-full h-[336px] px-[80px] justify-start items-start gap-6 inline-flex">
+    <div className="pt-[350px] pb-[50px] w-full h-[336px] px-[80px] justify-start items-start gap-6 inline-flex">
       <div className="flex flex-col justify-center items-center">
         {/* First Product Card */}
         <ProductCard

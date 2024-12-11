@@ -10,7 +10,7 @@ const Testimonials = () => {
   const testimonials = t.raw("reviews") as any[];
 
   return (
-    <section className="pt-[250px] pb-20">
+    <section className="pt-[350px] pb-20">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-white">{t("heading")}</h2>
       </div>

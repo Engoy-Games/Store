@@ -151,5 +151,8 @@
     "try": "Try",
     "betterLuck": "Better luck next time!",
     "close": "Close"
-  }
+  },
+  "orderSummary": "Order Summary",
+  "orderTotal": "Order total",
+  "checkout": "Checkout"
 }

@@ -1,3 +1,4 @@
+import React from "react";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { ModalProvider } from "@/providers/modal-provider";
@@ -8,7 +9,9 @@ import Head from "next/head";
 import cricle from "@/public/cricle.png";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import Ad  from "@/components/Ad";
+import Ad from "@/components/Ad";
+import PopupManager from "@/components/PopupManager";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export const metadata = {
   title: "Enjoy Games",
@@ -20,7 +23,7 @@ export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {  
+}) {
   const messages = await getMessages();
   return (
     <NextIntlClientProvider messages={messages}>
@@ -52,6 +55,9 @@ export default async function RootLayout({
           />
           <main className="flex-1 z-10">{children}</main>
           <Footer />
+          {/* Client-side popup manager */}
+          <PopupManager />
+          <WhatsAppButton />
         </body>
       </html>
     </NextIntlClientProvider>

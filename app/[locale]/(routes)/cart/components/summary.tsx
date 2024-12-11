@@ -7,25 +7,29 @@ import axios from 'axios'
 import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
+import { useTranslations, useLocale } from 'next-intl'
 
 export const Summary = () => {
   const searchParams = useSearchParams()
   const items = useCart((state) => state.items)
   const removeAll = useCart((state) => state.removeAll)
+  const t = useTranslations()  // Use useTranslations hook
+  const locale = useLocale()    // Get the current locale (language)
 
   useEffect(() => {
     if (searchParams.get('success')) {
-      toast.success('Your order has been placed!')
+      toast.success(t('orderPlaced'))
       removeAll()
     }
 
     if (searchParams.get('canceled')) {
-      toast.error('Something went wrong, please try again.')
+      toast.error(t('orderFailed'))
     }
-  }, [searchParams, removeAll])
+  }, [searchParams, removeAll, t])
 
+  // Calculate total price including quantity
   const totalPrice = items.reduce((total, item) => {
-    return total + Number(item.price)
+    return total + Number(item.price) * (item.quantity || 1) // Multiply by quantity if available
   }, 0)
 
   const onCheckout = async () => {
@@ -41,11 +45,18 @@ export const Summary = () => {
 
   return (
     <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
-      <h2 className="text-lg font-medium text-gray-900">Order Summary</h2>
+      {/* Conditional alignment for Order Summary based on locale */}
+      <h2 
+        className={`text-lg font-medium text-gray-900 ${locale === 'ar' ? 'text-right' : 'text-left'}`}
+      >
+        {t('orderSummary')}
+      </h2>
 
       <div className="mt-6 space-y-4">
-        <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-          <div className="text-base font-medium text-gray-900">Order total</div>
+        <div
+          className={`flex items-center justify-between border-t border-gray-200 pt-4 ${locale === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}
+        >
+          <div className="text-base font-medium text-gray-900">{t('orderTotal')}</div>
           <Currency value={totalPrice} />
         </div>
       </div>
@@ -55,7 +66,7 @@ export const Summary = () => {
         onClick={onCheckout}
         className="w-full mt-6"
       >
-        Checkout
+        {t('checkout')}
       </Button>
     </div>
   )

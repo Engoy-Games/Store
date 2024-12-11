@@ -36,6 +36,7 @@ export interface Product {
   productDescriptionEn: string;
   isFeatured: boolean;
   isArchived: boolean;
+  quantity: number;
   images: Image[];
   createdAt: Date;
   updatedAt: Date;

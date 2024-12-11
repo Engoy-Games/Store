@@ -151,5 +151,8 @@
     "try": "Try",
     "betterLuck": "Better luck next time!",
     "close": "Close"
-  }
+  },
+  "orderSummary": "ملخص الطلب",
+  "orderTotal": "إجمالي الطلب",
+  "checkout": "الدفع"
 }

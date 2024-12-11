@@ -1,58 +1,37 @@
-'use client'
+import { getProduct } from '@/actions/get-product'
+import dynamic from 'next/dynamic'
+import { getTranslations } from 'next-intl/server'
+import { Product } from '@/types'
+import { ProductList } from '@/components/product-list'
 
-import { Container } from '@/components/ui/container'
-import { useCart } from '@/hooks/use-cart'
-import { useEffect, useState } from 'react'
-import { CartItems } from './components/cart-items'
-import { Summary } from './components/summary'
-import { useTranslations } from 'next-intl' // Importing the translations hook
+// Dynamically import the CartPageClient to ensure it's client-side rendered
+const CartPageClient = dynamic(() => import('./CartPageClient'), {
+  ssr: false, // Disable SSR (server-side rendering)
+})
 
-const CartPage = () => {
-  const cart = useCart()
-  const t = useTranslations('cart') // Accessing cart translations
-  const [isMounted, setIsMounted] = useState(false)
+const productsIds: string[] = [
+  '6713a2ad5deece042c46c43b',
+  '6712b865ef2bd5e550f49c89',
+  '6712b44def2bd5e550f49c64',
+  '671279eeef2bd5e550f49c39',
+  '6712755fef2bd5e550f49c1d',
+  '6712774bef2bd5e550f49c26',
+]
 
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+const CartPage = async () => {
+  // Fetch products one by one
+  const products = await Promise.all(productsIds.map(id => getProduct(id)))
 
-  if (!isMounted) return null
+  // Fetch translations for the cart page
+  const t = await getTranslations('cart')
 
   return (
-    <div className="bg-gradient-to-bl from-[#7f36b9] via-[#6a3fbf] to-[#625bff] py-[100px] px-12">
-      <Container>
-        <div className="px-4 py-16 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-white">{t('title')}</h1>
+    <div className='py-[100px] bg-gradient-to-bl from-[#7f36b9] via-[#6a3fbf] to-[#625bff]'>
+      {/* Call the CartPageClient for client-side rendering */}
+      <CartPageClient />
 
-          <div className="mt-12 lg:grid lg:grid-cols-12 lg:items-start gap-x-12">
-            <div className="lg:col-span-7">
-              {cart.items.length === 0 && (
-                <p className="text-white">{t('emptyMessage')}</p>
-              )}
-
-              <ul>
-                {cart.items.map((item) => (
-                  <CartItems key={item.id} data={item} />
-                ))}
-              </ul>
-            </div>
-
-            <Summary />
-          </div>
-
-          {/* Optional: Add a Continue Shopping Button */}
-          {cart.items.length === 0 && (
-            <div className="mt-8">
-              <button
-                className="px-4 py-2 bg-yellow-400 text-black rounded-lg font-bold"
-                onClick={() => window.location.href = '/shop'} // Redirect to shop page
-              >
-                {t('continueShopping')}
-              </button>
-            </div>
-          )}
-        </div>
-      </Container>
+      {/* Render the product carousel with the fetched products */}
+      <ProductList items={products} title={t('relatedProducts')} />
     </div>
   )
 }
