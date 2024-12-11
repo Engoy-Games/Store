@@ -1,4 +1,3 @@
-// pages/product/[productId].tsx
 import { getProduct } from "@/actions/get-product";
 import { getProducts } from "@/actions/get-products";
 import { getCategory } from "@/actions/get-category";
@@ -9,6 +8,7 @@ import ProductTabs from "@/components/ProductTabs";
 import { getLocale, getTranslations } from "next-intl/server";
 import dynamic from "next/dynamic";
 import { InfoWithForm } from "@/components/InfoWithForm";
+import SocialShare from "@/components/SocialShare"; // Import the SocialShare component
 
 interface ProductPageProps {
   params: {
@@ -26,6 +26,12 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   const currentLang = await getLocale();
   const t = await getTranslations("productPage");
 
+  // Define the product URL, title, and image for sharing
+  const productUrl = `https://EngoyGames.com/product/${product.id}`; // Replace with actual product URL
+  const productTitle =
+    currentLang === "ar" ? String(product.name) : String(product.nameEn);
+  const productImage = product.images[0]?.url || ""; // Assuming the first image is used for sharing
+
   return (
     <div className="bg-gradient-to-bl from-[#7f36b9] via-[#6a3fbf] to-[#625bff] py-[80px] px-8">
       <Container>
@@ -41,17 +47,14 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
                 categoryFields={category?.fields}
                 currentLang={currentLang}
               />
+              {/* Social Share Component */}
+              <SocialShare
+                productUrl={productUrl}
+                productTitle={productTitle}
+                productImage={productImage}
+              />
             </div>
           </div>
-
-          {/* Product Tabs */}
-          <ProductTabs
-            description={
-              currentLang == "ar"
-                ? product.productDescription
-                : product.productDescriptionEn
-            }
-          />
 
           {/* Suggested Products */}
           <ProductList title={t("similarProducts")} items={suggestedProducts} />
