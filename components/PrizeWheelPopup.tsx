@@ -9,7 +9,18 @@ interface WheelPopupProps {
 
 const WheelPopup: React.FC<WheelPopupProps> = ({ visible, onClose }) => {
   const [state, setState] = useState({
-    list: ["$100", "$500", "$9,999", "$1", "$60", "$1,000", "$4.44", "$0", "$333"],
+    list: [
+      " مفاجأة خاصة",
+      "جحفلة",
+      "٪كربون خصم ١",
+      "جحفلة",
+      "هدية مجانية",  
+      "جحفلة",
+      "مفاجاه غير متوقعة",
+      "جحفلة",
+      "مفاجأة خاصة",
+      "جحفلة",
+    ],
     radius: 100,
     rotate: 0,
     easeOut: 0,

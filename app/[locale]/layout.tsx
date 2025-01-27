@@ -12,6 +12,8 @@ import { getMessages } from "next-intl/server";
 import Ad from "@/components/Ad";
 import PopupManager from "@/components/PopupManager";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 export const metadata = {
   title: "Enjoy Games",
@@ -26,40 +28,42 @@ export default async function RootLayout({
 }) {
   const messages = await getMessages();
   return (
-    <NextIntlClientProvider messages={messages}>
-      <html
-        lang="en"
-        className="bg-gradient-to-bl from-[#7f36b9] via-[#6a3fbf] to-[#625bff]"
-      >
-        <Head>
-          <title>{metadata.title}</title>
-          <meta name="description" content={metadata.description} />
-          <meta property="og:title" content={metadata.title} />
-          <meta property="og:description" content={metadata.description} />
-          <meta property="og:image" content={metadata.image} />
-          <meta property="og:type" content="website" />
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content={metadata.title} />
-          <meta name="twitter:description" content={metadata.description} />
-          <meta name="twitter:image" content={metadata.image} />
-        </Head>
-        <body className="relative">
-          <Ad />
-          <Navbar />
-          <ModalProvider />
-          <ToastProvider />
-          <Image
-            src={cricle}
-            alt="circle"
-            className="absolute -top-20 right-6 rotate-90 z-0"
-          />
-          <main className="flex-1 z-10">{children}</main>
-          <Footer />
-          {/* Client-side popup manager */}
-          <PopupManager />
-          <WhatsAppButton />
-        </body>
-      </html>
-    </NextIntlClientProvider>
+    <ClerkProvider>
+      <NextIntlClientProvider messages={messages}>
+        <html
+          lang="en"
+          className="bg-gradient-to-bl from-[#7f36b9] via-[#6a3fbf] to-[#625bff]"
+        >
+          <Head>
+            <title>{metadata.title}</title>
+            <meta name="description" content={metadata.description} />
+            <meta property="og:title" content={metadata.title} />
+            <meta property="og:description" content={metadata.description} />
+            <meta property="og:image" content={metadata.image} />
+            <meta property="og:type" content="website" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={metadata.title} />
+            <meta name="twitter:description" content={metadata.description} />
+            <meta name="twitter:image" content={metadata.image} />
+          </Head>
+          <body className="relative">
+            <Ad />
+            <Navbar />
+            <ModalProvider />
+            <ToastProvider />
+            <Image
+              src={cricle}
+              alt="circle"
+              className="absolute -top-20 right-6 rotate-90 z-0"
+            />
+            <main className="flex-1 z-10">{children}</main>
+            <Footer />
+            {/* Client-side popup manager */}
+            <PopupManager />
+            <WhatsAppButton />
+          </body>
+        </html>
+      </NextIntlClientProvider>
+    </ClerkProvider>
   );
 }

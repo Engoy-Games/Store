@@ -53,7 +53,7 @@ export const Navbar = () => {
         <div className="flex h-[100px] justify-between items-center px-4 sm:px-6 lg:px-8">
           {/* Navbar actions: Clerk (Sign-in, User button) + Cart */}
           <div className="flex items-center gap-6 text text-white">
-            <ClerkProvider>
+            <div className="flex">
               <SignedOut>
                 <SignInButton/>
               </SignedOut>
@@ -61,7 +61,7 @@ export const Navbar = () => {
                 <UserButton />
               </SignedIn>
               <NavbarActions />
-            </ClerkProvider>
+            </div>
 
             {/* Language Switcher Button */}
             <button

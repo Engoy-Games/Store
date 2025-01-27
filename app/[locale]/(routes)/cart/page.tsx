@@ -1,7 +1,6 @@
 import { getProduct } from '@/actions/get-product'
 import dynamic from 'next/dynamic'
 import { getTranslations } from 'next-intl/server'
-import { Product } from '@/types'
 import { ProductList } from '@/components/product-list'
 
 // Dynamically import the CartPageClient to ensure it's client-side rendered

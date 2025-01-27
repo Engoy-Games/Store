@@ -12,7 +12,7 @@ interface CartStore {
 }
 
 export const useCart = create(
-  persist<CartStore>(
+  persist<CartStore>( 
     (set, get) => ({
       items: [],
       addItem: (data: Product) => {
